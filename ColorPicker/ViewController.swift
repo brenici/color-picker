@@ -9,23 +9,31 @@
 import UIKit
 
 class ViewController: UIViewController {
-
-    let fileName = (#file as NSString).lastPathComponent // DEBUG ONLY
     
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var colorPickerView: ColorPickerView!
+    @IBOutlet weak var tapLabel: UILabel!
+
         
     let defaults = UserDefaults.standard
     let defaultColorKey = "defaultColor"
+    var defaultColor = UIColor()
     var didUpdateLayout = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("File: \(fileName), func: \(#function), line: \(#line)")
         colorPickerView.delegate = self
+        addGestureRecognisers()
+        getDefaultColor()
+        backgroundView.backgroundColor = defaultColor
+        tapLabel.textColor = defaultColor.maxContrast()
+        tapLabel.addShadow(color: .black, opacity: 0.3, offset: CGSize(width: 1, height: 1), radius: 3)
+        initiateColorPicker()
+    }
+    
+    func initiateColorPicker() {
         colorPickerView.translatesAutoresizingMaskIntoConstraints = false
-        colorPickerView.currentColor = UIColor(hex: getDefaultColor())
-        self.backgroundView.backgroundColor = UIColor(hex: getDefaultColor())
+        colorPickerView.currentColor = defaultColor
         colorPickerView.getColorComponents()
         colorPickerView.setColorComponents()
         colorPickerView.updateControls()
@@ -33,14 +41,28 @@ class ViewController: UIViewController {
     }
 
     override func viewWillLayoutSubviews() {
-        print("File: \(fileName), func: \(#function), line: \(#line)")
         if !didUpdateLayout {
             updateLayout()
         }
     }
     
-    private func updateLayout() { // Auto Layout
-        print("File: \(fileName), func: \(#function), line: \(#line)")
+    private func addGestureRecognisers() {
+        let tapGesture = UITapGestureRecognizer()
+        tapGesture.addTarget(self, action: #selector(backgroundViewTapped(_:)))
+        backgroundView.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc private func backgroundViewTapped(_ recognizer: UITapGestureRecognizer) {
+        showColorPickerView()
+    }
+    
+    func showColorPickerView() {
+        tapLabel.fadeView(0.0, 0.4, hidden: colorPickerView.isHidden)
+        colorPickerView.fadeView(0.0, 0.5, hidden: !colorPickerView.isHidden)
+        colorPickerView.updateColors(with: backgroundView.backgroundColor ?? .green)
+    }
+    
+    private func updateLayout() {
         let side = min(self.view.frame.height, self.view.frame.width)
         let constant = side > 414 ? side * 0.6 : side
         print(constant)
@@ -49,17 +71,16 @@ class ViewController: UIViewController {
         didUpdateLayout = true
     }
     
-    private func getDefaultColor() -> String { // Get Persisted Color Hex Value
-        print("File: \(fileName), func: \(#function), line: \(#line)")
+    private func getDefaultColor() {
         if let color = defaults.value(forKey: defaultColorKey) as? String {
-            return color
+            defaultColor = UIColor(hex: color)
+        } else {
+            defaultColor = UIColor(hex: "#00ff00ff")
+            saveDefaultColor("#00ff00ff")
         }
-        saveDefaultColor("#00ff00ff")
-        return "#00ff00ff"
     }
     
-    private func saveDefaultColor(_ color: String) { // Persist Color Hex Value
-        print("File: \(fileName), func: \(#function), line: \(#line)")
+    private func saveDefaultColor(_ color: String) {
         defaults.set(color, forKey: defaultColorKey)
     }
     
@@ -67,30 +88,30 @@ class ViewController: UIViewController {
 
 extension ViewController: ColorPickerViewDelegate {
     
-    func changeColor(_ color: UIColor) { // change background color - instantlyChangeColors
+    func changeColor(_ color: UIColor) {
         backgroundView.backgroundColor = color
-        print(color)
+        tapLabel.textColor = color.maxContrast()
     }
     
-    func undoColor(_ color: UIColor) { // undo color and close controls
+    func undoColor(_ color: UIColor) {
         backgroundView.backgroundColor = color
-        
+        tapLabel.textColor = color.maxContrast()
     }
     
-    func applyColor(_ color: UIColor) { // apply and save color // and close controls
-//        backgroundView.backgroundColor = color
+    func applyColor(_ color: UIColor) {
         saveDefaultColor(color.hexRGBA())
     }
     
-    func colorChanged(_ color: UIColor) { //
+    func colorChanged(_ color: UIColor) {
         self.view.backgroundColor = color
         backgroundView.backgroundColor = color
+        tapLabel.textColor = color.maxContrast()
         saveDefaultColor(color.hexRGBA())
     }
     
-//    func showColorPickerView(_ state: Bool, _ color: UIColor) {
-//
-//    }
+    func hideColorPickerView() {
+        showColorPickerView()
+    }
     
 }
 

@@ -15,7 +15,6 @@ protocol BrightnessControlDelegate {
 
 class BrightnessControl: UIView {
     
-    let fileName = (#file as NSString).lastPathComponent // DEBUG ONLY
     var delegate: BrightnessControlDelegate?
     let gradientTrack = GradientTrack()
     var controlThumb: ControlThumb!
@@ -28,13 +27,12 @@ class BrightnessControl: UIView {
         super.init(frame: frame)
     }
     
-    convenience init(frame: CGRect, color: UIColor, components: [CGFloat]) {
+    convenience init(frame: CGRect, color: UIColor) {
         self.init(frame: frame)
         self.commonInit()
     }
     
     private func commonInit() {
-        print("File: \(fileName), func: \(#function), line: \(#line)")
         addGradientTrack()
         addControlThumb()
         layoutControlThumb()
@@ -42,7 +40,6 @@ class BrightnessControl: UIView {
     }
     
     private func addGradientTrack() {
-        print("File: \(fileName), func: \(#function), line: \(#line)")
         let trackBezel = GradientTrack()
         let bezelWidth = self.bounds.height / 20
         trackBezel.frame = self.bounds.insetBy(dx: (thumbSize.width / 4) - bezelWidth, dy: (self.bounds.height / 2.56) - bezelWidth)
@@ -56,7 +53,6 @@ class BrightnessControl: UIView {
     }
     
     private func addControlThumb() {
-        print("File: \(fileName), func: \(#function), line: \(#line)")
         let frame = CGRect(x: 0, y: 0, width: thumbSize.width, height: thumbSize.height)
         controlThumb = ControlThumb(frame: frame)
         self.addSubview(controlThumb)
@@ -64,13 +60,11 @@ class BrightnessControl: UIView {
     }
     
     private func addGestureRecognizers() {
-        print("File: \(fileName), func: \(#function), line: \(#line)")
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.thumbControlPanned(_:)))
         controlThumb.addGestureRecognizer(panGesture)
     }
     
     @objc private func thumbControlPanned(_ recognizer: UIPanGestureRecognizer) {
-        print("File: \(fileName), func: \(#function), line: \(#line)")
         switch(recognizer.state) {
         case UIGestureRecognizer.State.changed:
             let point = recognizer.location(in: self).x-(thumbSize.width/2)
@@ -84,15 +78,18 @@ class BrightnessControl: UIView {
     }
     
     private func moveThumbTowardPoint(_ delta: CGFloat) {
-        print("File: \(fileName), func: \(#function), line: \(#line)")
         let thumbPosition = delta/(self.bounds.width-thumbSize.width)
         brightnessValue = max(min(thumbPosition, 1.0), 0.0)
         layoutControlThumb()
         delegate?.brightnessChanged(brightnessValue)
     }
     
+    func updateControlThumb(with brightness: CGFloat) {
+        brightnessValue = brightness
+        layoutControlThumb()
+    }
+    
     func layoutControlThumb() {
-        print("File: \(fileName), func: \(#function), line: \(#line)")
         let newPosition = (brightnessValue * (bounds.width - controlThumb.bounds.width)) + controlThumb.bounds.width/2
         controlThumb.center.x = newPosition
     }
@@ -104,8 +101,13 @@ class BrightnessControl: UIView {
         gradientTrack.gradient.colors = [colors[0].cgColor,  colors[1].cgColor]
     }
     
+    func showThumbValue(_ value: String, _ color: UIColor) {
+        controlThumb.valueLabel.text = value
+        controlThumb.valueLabel.textColor = color
+        controlThumb.typeLabel.textColor = color
+    }
+    
     private func applyBrightness() {
-        print("File: \(fileName), func: \(#function), line: \(#line)")
         print(brightnessValue)
         delegate?.brightnessApplied(brightnessValue)
     }

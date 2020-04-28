@@ -15,7 +15,6 @@ protocol SaturationControlDelegate {
 
 class SaturationControl: UIView {
   
-    let fileName = (#file as NSString).lastPathComponent // DEBUG ONLY
     var delegate: SaturationControlDelegate?
     let gradientTrack = GradientTrack()
     var controlThumb: ControlThumb!
@@ -28,7 +27,7 @@ class SaturationControl: UIView {
         super.init(frame: frame)
     }
     
-    convenience init(frame: CGRect, color: UIColor, components: [CGFloat]) {
+    convenience init(frame: CGRect, color: UIColor) {
         self.init(frame: frame)
         self.commonInit()
     }
@@ -85,6 +84,11 @@ class SaturationControl: UIView {
         delegate?.saturationChanged(saturationValue)
     }
     
+    func updateControlThumb(with saturation: CGFloat) {
+        saturationValue = saturation
+        layoutControlThumb()
+    }
+    
     func layoutControlThumb() {
         let newPosition = (saturationValue * (bounds.width - controlThumb.bounds.width)) + controlThumb.bounds.width/2
         controlThumb.center.x = newPosition
@@ -95,6 +99,12 @@ class SaturationControl: UIView {
         gradientTrack.gradient.startPoint = CGPoint(x: 0, y: 0.5)
         gradientTrack.gradient.endPoint = CGPoint(x: 1, y: 0.5)
         gradientTrack.gradient.colors = [colors[0].cgColor,  colors[1].cgColor]
+    }
+    
+    func showThumbValue(_ value: String, _ color: UIColor) {
+        controlThumb.valueLabel.text = value
+        controlThumb.valueLabel.textColor = color
+        controlThumb.typeLabel.textColor = color
     }
     
     private func applySaturation() {

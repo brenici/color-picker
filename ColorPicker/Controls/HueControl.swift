@@ -15,7 +15,6 @@ protocol HueControlDelegate {
 
 class HueControl: UIView {
     
-    let fileName = (#file as NSString).lastPathComponent // DEBUG ONLY
     var delegate: HueControlDelegate?
     var controlThumb: ControlThumb!
     var hueValue = CGFloat()
@@ -30,7 +29,7 @@ class HueControl: UIView {
         super.init(frame: frame)
     }
     
-    convenience init(frame: CGRect, color: UIColor, components: [CGFloat]) {
+    convenience init(frame: CGRect, color: UIColor) {
         self.init(frame: frame)
         controlWidth = self.frame.width
         commonInit()
@@ -44,12 +43,10 @@ class HueControl: UIView {
     }
     
     private func addGestureRecognizers() {
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.controlThumbHasMoved(_:)))
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.thumbControlPanned(_:)))
         controlThumb.addGestureRecognizer(panGesture)
     }
-    
-    // CONTROLS
-    
+        
     private func addColorWheelView() {
         let colorWheelView = ColorWheel(frame: CGRect(x: margin, y: margin, width: controlWidth - (margin * 2), height: controlWidth - (margin * 2)))
         colorWheelView.backgroundColor = .clear
@@ -63,13 +60,16 @@ class HueControl: UIView {
         self.addSubview(controlThumb)
     }
     
+    func updateControlThumb(with huevalue: CGFloat) {
+        getHueAngle(from: huevalue)
+        layoutControlThumb()
+    }
+    
     func layoutControlThumb() {
         let newPosition = getThumbPosition(from: hueAngle)
         controlThumb.center = newPosition
         getHueValue(from: hueAngle)
     }
-    
-    // GEOMETRY
     
     private func getHueValue(from angle: Float) {
         hueValue = 1.0 - CGFloat(Double(angle) / (2 * Double.pi))
@@ -95,7 +95,7 @@ class HueControl: UIView {
         return CGPoint(x: positionX, y: positionY)
     }
     
-    @objc private func controlThumbHasMoved(_ recognizer: UIPanGestureRecognizer) {
+    @objc private func thumbControlPanned(_ recognizer: UIPanGestureRecognizer) {
         switch(recognizer.state) {
         case UIGestureRecognizer.State.changed:
             moveControlThumb(toward: recognizer.location(in: self))
@@ -112,6 +112,12 @@ class HueControl: UIView {
         hueAngle = getHueAngle(from: point)
         layoutControlThumb()
         delegate?.hueChanged(hueValue)
+    }
+    
+    func showThumbValue(_ value: String, _ color: UIColor) {
+        controlThumb.valueLabel.text = value
+        controlThumb.valueLabel.textColor = color
+        controlThumb.typeLabel.textColor = color
     }
         
     private func applyHue() {

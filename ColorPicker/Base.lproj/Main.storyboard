@@ -18,7 +18,13 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WOa-bf-hX9">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dWc-W5-FG2" customClass="ColorPickerView" customModule="Color_Picker" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap to change the color" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3F-qt-HkT">
+                                        <rect key="frame" x="97.333333333333329" y="395.66666666666669" width="180.66666666666669" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view hidden="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dWc-W5-FG2" customClass="ColorPickerView" customModule="Color_Picker" customModuleProvider="target">
                                         <rect key="frame" x="27.666666666666657" y="246" width="320" height="320"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -32,7 +38,9 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.00070794753086422801" green="1" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
+                                    <constraint firstItem="h3F-qt-HkT" firstAttribute="centerX" secondItem="WOa-bf-hX9" secondAttribute="centerX" id="4Xo-ez-Ady"/>
                                     <constraint firstItem="dWc-W5-FG2" firstAttribute="centerX" secondItem="WOa-bf-hX9" secondAttribute="centerX" id="Bib-32-TOw"/>
+                                    <constraint firstItem="h3F-qt-HkT" firstAttribute="centerY" secondItem="WOa-bf-hX9" secondAttribute="centerY" id="I6X-CJ-VLH"/>
                                     <constraint firstItem="dWc-W5-FG2" firstAttribute="centerY" secondItem="WOa-bf-hX9" secondAttribute="centerY" id="ZFJ-rH-eyE"/>
                                 </constraints>
                             </view>
@@ -49,6 +57,7 @@
                     <connections>
                         <outlet property="backgroundView" destination="WOa-bf-hX9" id="iYT-9K-SJK"/>
                         <outlet property="colorPickerView" destination="dWc-W5-FG2" id="ShQ-3T-cZY"/>
+                        <outlet property="tapLabel" destination="h3F-qt-HkT" id="dzr-pU-7fj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

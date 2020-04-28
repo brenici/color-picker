@@ -113,4 +113,11 @@ extension UIColor {
         return luminance >= 0.5 ? .black : .white
     }
     
+    func shouldStatusBarDark() -> Bool {
+        var R: CGFloat = 0, G: CGFloat = 0, B: CGFloat = 0, A: CGFloat = 0
+        guard self.getRed(&R, green: &G, blue: &B, alpha: &A) else { return true }
+        let luminance = ((R * 0.299) + (G * 0.587) + (B * 0.114))
+        return luminance >= 0.5 ? true : false
+    }
+    
 }

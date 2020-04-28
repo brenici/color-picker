@@ -9,7 +9,6 @@
 import UIKit
 
 protocol ColorPickerViewDelegate {
-    func colorChanged(_ color: UIColor)
     func changeColor(_ color: UIColor)
     func applyColor(_ color: UIColor)
     func undoColor(_ color: UIColor)
@@ -30,8 +29,8 @@ class ColorPickerView: UIView {
     var controlSize: CGSize {
         get { return CGSize(width: screenWidth / 2.4, height: screenWidth / 8) }
     }
-    var currentColor = UIColor.green
-    var hueValue: CGFloat = 0.1
+    var currentColor: UIColor = .green
+    var hueValue: CGFloat = 0.01
     var saturationValue: CGFloat = 1.0
     var brightnessValue: CGFloat = 1.0
     var screenWidth: CGFloat = min(UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height)
@@ -185,7 +184,7 @@ class ColorPickerView: UIView {
     }
     
     @objc private func undoButtonTapped(_ recognizer: UITapGestureRecognizer) {
-        delegate?.colorChanged(undoButton.color)
+        delegate?.undoColor(undoButton.color)
         currentColor = undoButton.color
         getColorComponents()
         updateControls()

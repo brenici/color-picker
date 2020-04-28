@@ -79,7 +79,7 @@ class BrightnessControl: UIView {
     
     private func moveThumbTowardPoint(_ delta: CGFloat) {
         let thumbPosition = delta/(self.bounds.width-thumbSize.width)
-        brightnessValue = max(min(thumbPosition, 1.0), 0.0)
+        brightnessValue = max(min(thumbPosition, 1.0), 0.001)
         layoutControlThumb()
         delegate?.brightnessChanged(brightnessValue)
     }
@@ -108,7 +108,6 @@ class BrightnessControl: UIView {
     }
     
     private func applyBrightness() {
-        print(brightnessValue)
         delegate?.brightnessApplied(brightnessValue)
     }
     

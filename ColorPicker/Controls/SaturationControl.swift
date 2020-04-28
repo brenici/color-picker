@@ -79,7 +79,7 @@ class SaturationControl: UIView {
     
     private func moveThumbTowardPoint(_ delta: CGFloat) {
         let thumbPosition = delta/(self.bounds.width-thumbSize.width)
-        saturationValue = max(min(thumbPosition, 1.0), 0.0)
+        saturationValue = max(min(thumbPosition, 1.0), 0.001)
         layoutControlThumb()
         delegate?.saturationChanged(saturationValue)
     }

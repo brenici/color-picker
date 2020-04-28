@@ -13,6 +13,14 @@
 		7A713697245588CD00E7DC5B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A713695245588CD00E7DC5B /* Main.storyboard */; };
 		7A713699245588CE00E7DC5B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A713698245588CE00E7DC5B /* Assets.xcassets */; };
 		7A71369C245588CE00E7DC5B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A71369A245588CE00E7DC5B /* LaunchScreen.storyboard */; };
+		7A7136A42455F2F700E7DC5B /* ColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7136A32455F2F700E7DC5B /* ColorPickerView.swift */; };
+		7A7136A62455F6E500E7DC5B /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7136A52455F6E500E7DC5B /* UIColor+Extensions.swift */; };
+		7A7136A924570F1500E7DC5B /* HueControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7136A824570F1500E7DC5B /* HueControl.swift */; };
+		7A7136AC2457130200E7DC5B /* BrightnessControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7136AB2457130200E7DC5B /* BrightnessControl.swift */; };
+		7A7136AE2457134F00E7DC5B /* SaturationControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7136AD2457134F00E7DC5B /* SaturationControl.swift */; };
+		7A7136B2245729B600E7DC5B /* ControlThumb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7136B1245729B600E7DC5B /* ControlThumb.swift */; };
+		7A7136B42457320000E7DC5B /* ColorWheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7136B32457320000E7DC5B /* ColorWheel.swift */; };
+		7A7136B62457370700E7DC5B /* GradientTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7136B52457370700E7DC5B /* GradientTrack.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +32,14 @@
 		7A713698245588CE00E7DC5B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7A71369B245588CE00E7DC5B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7A71369D245588CE00E7DC5B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7A7136A32455F2F700E7DC5B /* ColorPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerView.swift; sourceTree = "<group>"; };
+		7A7136A52455F6E500E7DC5B /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
+		7A7136A824570F1500E7DC5B /* HueControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HueControl.swift; sourceTree = "<group>"; };
+		7A7136AB2457130200E7DC5B /* BrightnessControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrightnessControl.swift; sourceTree = "<group>"; };
+		7A7136AD2457134F00E7DC5B /* SaturationControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaturationControl.swift; sourceTree = "<group>"; };
+		7A7136B1245729B600E7DC5B /* ControlThumb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlThumb.swift; sourceTree = "<group>"; };
+		7A7136B32457320000E7DC5B /* ColorWheel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorWheel.swift; sourceTree = "<group>"; };
+		7A7136B52457370700E7DC5B /* GradientTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientTrack.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +72,39 @@
 		7A71368E245588CD00E7DC5B /* ColorPicker */ = {
 			isa = PBXGroup;
 			children = (
+				7A713695245588CD00E7DC5B /* Main.storyboard */,
 				7A71368F245588CD00E7DC5B /* AppDelegate.swift */,
 				7A713691245588CD00E7DC5B /* SceneDelegate.swift */,
 				7A713693245588CD00E7DC5B /* ViewController.swift */,
-				7A713695245588CD00E7DC5B /* Main.storyboard */,
+				7A7136A32455F2F700E7DC5B /* ColorPickerView.swift */,
+				7A7136AA24570F2300E7DC5B /* Controls */,
 				7A713698245588CE00E7DC5B /* Assets.xcassets */,
 				7A71369A245588CE00E7DC5B /* LaunchScreen.storyboard */,
 				7A71369D245588CE00E7DC5B /* Info.plist */,
+				7A7136A72455F6ED00E7DC5B /* Extensions */,
 			);
 			path = ColorPicker;
+			sourceTree = "<group>";
+		};
+		7A7136A72455F6ED00E7DC5B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				7A7136A52455F6E500E7DC5B /* UIColor+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		7A7136AA24570F2300E7DC5B /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+				7A7136A824570F1500E7DC5B /* HueControl.swift */,
+				7A7136AB2457130200E7DC5B /* BrightnessControl.swift */,
+				7A7136AD2457134F00E7DC5B /* SaturationControl.swift */,
+				7A7136B32457320000E7DC5B /* ColorWheel.swift */,
+				7A7136B52457370700E7DC5B /* GradientTrack.swift */,
+				7A7136B1245729B600E7DC5B /* ControlThumb.swift */,
+			);
+			path = Controls;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -95,7 +135,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1140;
 				LastUpgradeCheck = 1140;
-				ORGANIZATIONNAME = emilianbrenici;
+				ORGANIZATIONNAME = "Emilian Brenici";
 				TargetAttributes = {
 					7A71368B245588CD00E7DC5B = {
 						CreatedOnToolsVersion = 11.4.1;
@@ -138,7 +178,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A7136A924570F1500E7DC5B /* HueControl.swift in Sources */,
+				7A7136B62457370700E7DC5B /* GradientTrack.swift in Sources */,
+				7A7136B2245729B600E7DC5B /* ControlThumb.swift in Sources */,
+				7A7136A42455F2F700E7DC5B /* ColorPickerView.swift in Sources */,
+				7A7136A62455F6E500E7DC5B /* UIColor+Extensions.swift in Sources */,
+				7A7136AC2457130200E7DC5B /* BrightnessControl.swift in Sources */,
 				7A713694245588CD00E7DC5B /* ViewController.swift in Sources */,
+				7A7136B42457320000E7DC5B /* ColorWheel.swift in Sources */,
+				7A7136AE2457134F00E7DC5B /* SaturationControl.swift in Sources */,
 				7A713690245588CD00E7DC5B /* AppDelegate.swift in Sources */,
 				7A713692245588CD00E7DC5B /* SceneDelegate.swift in Sources */,
 			);

@@ -160,7 +160,7 @@ class ColorPickerView: UIView {
         imageView.tintColor = .white
         imageView.frame = CGRect(x: size / 5, y: size / 6, width: size / 2, height: size / 2)
         imageView.center = CGPoint(x: size / 2, y: size / 2)
-        // MARK: TO DO: add shadow
+        imageView.addShadow(color: .black, opacity: 0.7, offset: .zero, radius: 3)
         imageView.clipsToBounds = false
         return imageView
     }

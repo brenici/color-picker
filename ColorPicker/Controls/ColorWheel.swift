@@ -16,7 +16,7 @@ class ColorWheel: UIView {
         super.init(frame: frame)
         self.backgroundColor = UIColor.clear
         addWheelLayer()
-        // MARK: TO DO: add shadow
+        self.addShadow(color: .black, opacity: 0.4, offset: CGSize(width: 1, height: 2), radius: 3)
     }
     
     private func addWheelLayer() {
@@ -28,7 +28,7 @@ class ColorWheel: UIView {
     
     private func layoutWheelLayer() {
         let strokeWidth: CGFloat = self.bounds.width / 32
-        let bezelWidth: CGFloat = self.bounds.width / 160
+        let bezelWidth: CGFloat = self.bounds.width / 240
         let point: CGFloat = (strokeWidth / 2) + (bezelWidth * 2)
         let wheelDiameter: CGFloat = self.bounds.width - (strokeWidth) - (bezelWidth * 4)
         let wheelPath = UIBezierPath(ovalIn: CGRect(x: point, y: point, width: wheelDiameter, height: wheelDiameter))

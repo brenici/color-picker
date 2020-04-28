@@ -26,7 +26,7 @@ class ControlThumb: UIView {
         super.init(frame: frame)
         self.backgroundColor = UIColor.clear
         addThumbLayer()
-        // MARK: TO DO: add shadow
+        self.addShadow(color: .black, opacity: 0.4, offset: CGSize(width: 1, height: 2), radius: 3)
         addTypeLabel()
         addValueLabel()
     }

@@ -24,6 +24,12 @@ class ViewController: UIViewController {
         print("File: \(fileName), func: \(#function), line: \(#line)")
         colorPickerView.delegate = self
         colorPickerView.translatesAutoresizingMaskIntoConstraints = false
+        colorPickerView.currentColor = UIColor(hex: getDefaultColor())
+        self.backgroundView.backgroundColor = UIColor(hex: getDefaultColor())
+        colorPickerView.getColorComponents()
+        colorPickerView.setColorComponents()
+        colorPickerView.updateControls()
+
     }
 
     override func viewWillLayoutSubviews() {
@@ -63,6 +69,7 @@ extension ViewController: ColorPickerViewDelegate {
     
     func changeColor(_ color: UIColor) { // change background color - instantlyChangeColors
         backgroundView.backgroundColor = color
+        print(color)
     }
     
     func undoColor(_ color: UIColor) { // undo color and close controls
@@ -70,8 +77,8 @@ extension ViewController: ColorPickerViewDelegate {
         
     }
     
-    func applyColor(_ color: UIColor) { // apply color and close controls
-        backgroundView.backgroundColor = color
+    func applyColor(_ color: UIColor) { // apply and save color // and close controls
+//        backgroundView.backgroundColor = color
         saveDefaultColor(color.hexRGBA())
     }
     
@@ -81,9 +88,9 @@ extension ViewController: ColorPickerViewDelegate {
         saveDefaultColor(color.hexRGBA())
     }
     
-    func showColorPickerView(_ state: Bool, _ color: UIColor) {
-
-    }
+//    func showColorPickerView(_ state: Bool, _ color: UIColor) {
+//
+//    }
     
 }
 

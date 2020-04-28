@@ -36,6 +36,7 @@ class SaturationControl: UIView {
     private func commonInit() {
         addGradientTrack()
         addControlThumb()
+        layoutControlThumb()
         addGestureRecognizers()
     }
     
@@ -44,7 +45,7 @@ class SaturationControl: UIView {
         let bezel = self.bounds.height / 20
         trackBezel.frame = self.bounds.insetBy(dx: (thumbSize.width / 4) - bezel, dy: (self.bounds.height / 2.56) - bezel)
         trackBezel.layer.cornerRadius = trackBezel.bounds.height / 2
-        // MARK: TO DO: add shadow
+        trackBezel.addShadow(color: .black, opacity: 0.4, offset: CGSize(width: 1, height: 2), radius: 3)
         self.addSubview(trackBezel)
         gradientTrack.frame = self.bounds.insetBy(dx: thumbSize.width / 4, dy: self.bounds.height / 2.56)
         gradientTrack.layer.cornerRadius = gradientTrack.bounds.height / 2
@@ -80,20 +81,20 @@ class SaturationControl: UIView {
     private func moveThumbTowardPoint(_ delta: CGFloat) {
         let thumbPosition = delta/(self.bounds.width-thumbSize.width)
         saturationValue = max(min(thumbPosition, 1.0), 0.0)
-        layoutControlThumb(animated: true)
-//        delegate?.saturationChanged(saturationValue)
+        layoutControlThumb()
+        delegate?.saturationChanged(saturationValue)
     }
     
-    func layoutControlThumb(animated: Bool) {
+    func layoutControlThumb() {
         let newPosition = (saturationValue * (bounds.width - controlThumb.bounds.width)) + controlThumb.bounds.width/2
-        if animated {
-            UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseInOut, animations: { () -> Void in
-                self.controlThumb.center.x = newPosition
-            })
-        } else {
-            controlThumb.center.x = newPosition
-        }
-        // set controlThumb Color
+        controlThumb.center.x = newPosition
+    }
+    
+    func updateGradientTrack(colors: [UIColor]) {
+        gradientTrack.gradient.frame = gradientTrack.bounds
+        gradientTrack.gradient.startPoint = CGPoint(x: 0, y: 0.5)
+        gradientTrack.gradient.endPoint = CGPoint(x: 1, y: 0.5)
+        gradientTrack.gradient.colors = [colors[0].cgColor,  colors[1].cgColor]
     }
     
     private func applySaturation() {

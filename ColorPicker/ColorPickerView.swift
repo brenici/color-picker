@@ -42,17 +42,19 @@ class ColorPickerView: UIView {
     var brightnessValue: CGFloat = 1.0
     
     var screenWidth: CGFloat = min(UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height)
-
+    
     override init(frame: CGRect) {
         print("File: \(fileName), func: \(#function), line: \(#line)")
         super.init(frame: frame)
-//        self.commonInit()
     }
     
     private func commonInit() {
         print("File: \(fileName), func: \(#function), line: \(#line)")
         getColorComponents()
         addControls()
+        hueControl.delegate = self
+        brightnessControl.delegate = self
+        saturationControl.delegate = self
     }
     
     func getColorComponents() {
@@ -60,6 +62,15 @@ class ColorPickerView: UIView {
         hueValue = currentColor.getHueValue()
         brightnessValue = currentColor.getBrightnessValue()
         saturationValue = currentColor.getSaturationValue()
+    }
+    
+    func setColorComponents() {
+        print("File: \(fileName), func: \(#function), line: \(#line)")
+        hueControl.hueValue = hueValue
+        hueControl.getHueAngle(from: hueValue)
+        brightnessControl.brightnessValue = brightnessValue
+        saturationControl.saturationValue = saturationValue
+        undoButton.color = currentColor
     }
     
     private func addControls() {
@@ -109,7 +120,7 @@ class ColorPickerView: UIView {
         hexValueLabel.center = CGPoint(x: screenWidth/2, y: screenWidth*0.25)
         hexValueLabel.font = UIFont(name: "Menlo-Regular", size: hexValueLabel.bounds.height/2)
         hexValueLabel.textColor = currentColor.maxContrast()
-        // MARK: TO DO: add shadow
+        hexValueLabel.addShadow(color: .black, opacity: 0.4, offset: CGSize(width: 1, height: 2), radius: 3)
         hexValueLabel.text = currentColor.hexRGB()
         self.addSubview(hexValueLabel)
     }
@@ -154,6 +165,27 @@ class ColorPickerView: UIView {
         return imageView
     }
     
+    func updateControls() {
+        updateControlThumbs()
+        updateTrackGradients()
+    }
+    
+    func updateControlThumbs() {
+        hueControl.layoutControlThumb()
+        hueControl.controlThumb.color = currentColor
+        brightnessControl.layoutControlThumb()
+        brightnessControl.controlThumb.color = currentColor
+        saturationControl.layoutControlThumb()
+        saturationControl.controlThumb.color = currentColor
+        applyButton.color = currentColor
+        hexValueLabel.text = currentColor.hexRGB()
+    }
+    
+    func updateTrackGradients() {
+        brightnessControl.updateGradientTrack(colors: [currentColor.setBrightnessValue(to: 0.1), currentColor.setBrightnessValue(to: 1.0).setHueValue(to: hueValue)])
+        saturationControl.updateGradientTrack(colors: [currentColor.setSaturationValue(to: 0.1), currentColor.setSaturationValue(to: 1.0).setHueValue(to: hueValue)])
+    }
+    
     @objc private func applyButtonTapped(_ recognizer: UITapGestureRecognizer) {
         print("File: \(fileName), func: \(#function), line: \(#line)")
         // apply and save color
@@ -177,11 +209,16 @@ class ColorPickerView: UIView {
 extension ColorPickerView: HueControlDelegate {
     
     func hueChanged(_ huevalue: CGFloat) {
-        // update color
+        getColorComponents()
+        currentColor = currentColor.setHueValue(to: huevalue) //= UIColor(hue: huevalue, saturation: saturationValue, brightness: brightnessValue, alpha: 1.0)
+        delegate?.changeColor(currentColor)
+        updateControls()
     }
     
     func hueApplied(_ huevalue: CGFloat) {
-        // save color
+//        currentColor = currentColor.setHueValue(to: huevalue)
+        delegate?.applyColor(currentColor)
+//        delegate?.changeColor(UIColor(hue: huevalue, saturation: saturationValue, brightness: brightnessValue, alpha: 1.0))
     }
     
 }
@@ -189,11 +226,17 @@ extension ColorPickerView: HueControlDelegate {
 extension ColorPickerView: BrightnessControlDelegate {
     
     func brightnessChanged(_ brightness: CGFloat) {
-        delegate?.changeColor(UIColor(hue: hueValue, saturation: saturationValue, brightness: brightness, alpha: 1.0))
+//        getColorComponents()
+//        currentColor = UIColor(hue: hueValue, saturation: saturationValue, brightness: brightness, alpha: 1.0)
+        currentColor = currentColor.setBrightnessValue(to: brightness)
+        delegate?.changeColor(currentColor)
+        updateControls()
     }
     
     func brightnessApplied(_ brightness: CGFloat) {
-        // save color
+        currentColor = currentColor.setBrightnessValue(to: brightness)
+        delegate?.applyColor(currentColor)
+//        delegate?.changeColor(UIColor(hue: hueValue, saturation: saturationValue, brightness: brightness, alpha: 1.0))
     }
     
 }
@@ -201,11 +244,15 @@ extension ColorPickerView: BrightnessControlDelegate {
 extension ColorPickerView: SaturationControlDelegate {
     
     func saturationChanged(_ saturation: CGFloat) {
-        // update color
+        currentColor = currentColor.setSaturationValue(to: saturation)
+        delegate?.changeColor(currentColor)
+        updateControls()
     }
     
     func saturationApplied(_ saturation: CGFloat) {
-        // save color
+        currentColor = currentColor.setSaturationValue(to: saturation)
+        delegate?.applyColor(currentColor)
+//        delegate?.changeColor(UIColor(hue: hueValue, saturation: saturation, brightness: brightnessValue, alpha: 1.0))
     }
     
 }

@@ -41,7 +41,6 @@ class HueControl: UIView {
         addControlThumb()
         layoutControlThumb()
         addGestureRecognizers()
-        
     }
     
     private func addGestureRecognizers() {
@@ -54,7 +53,6 @@ class HueControl: UIView {
     private func addColorWheelView() {
         let colorWheelView = ColorWheel(frame: CGRect(x: margin, y: margin, width: controlWidth - (margin * 2), height: controlWidth - (margin * 2)))
         colorWheelView.backgroundColor = .clear
-        // MARK: TO DO: add shadow
         self.addSubview(colorWheelView)
     }
     
@@ -77,7 +75,7 @@ class HueControl: UIView {
         hueValue = 1.0 - CGFloat(Double(angle) / (2 * Double.pi))
     }
     
-    private func getHueAngle(from value: CGFloat) {
+    func getHueAngle(from value: CGFloat) {
         hueAngle = 2 * Float.pi * (1 - Float(value))
     }
     

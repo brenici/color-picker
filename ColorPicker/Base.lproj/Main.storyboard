@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina5_9" orientation="portrait" appearance="light"/>
+    <device id="ipad12_9rounded" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -12,27 +12,24 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Color_Picker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WOa-bf-hX9">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap to change the color" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3F-qt-HkT">
-                                        <rect key="frame" x="97.333333333333329" y="395.66666666666669" width="180.66666666666669" height="21"/>
+                                        <rect key="frame" x="421.5" y="672.5" width="181" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view hidden="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dWc-W5-FG2" customClass="ColorPickerView" customModule="Color_Picker" customModuleProvider="target">
-                                        <rect key="frame" x="27.666666666666657" y="246" width="320" height="320"/>
+                                        <rect key="frame" x="352" y="523" width="320" height="320"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="dWc-W5-FG2" secondAttribute="height" multiplier="1:1" id="41K-6Y-Bm4"/>
-                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="580" id="4yW-tq-2LS"/>
-                                            <constraint firstAttribute="height" priority="750" constant="320" id="9YC-Ju-OR4"/>
-                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="580" id="eRy-OE-QAs"/>
-                                            <constraint firstAttribute="width" priority="750" constant="320" id="mOm-wL-Ill"/>
+                                            <constraint firstAttribute="width" constant="320" id="mOm-wL-Ill"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -57,6 +54,7 @@
                     <connections>
                         <outlet property="backgroundView" destination="WOa-bf-hX9" id="iYT-9K-SJK"/>
                         <outlet property="colorPickerView" destination="dWc-W5-FG2" id="ShQ-3T-cZY"/>
+                        <outlet property="colorPickerWidthConstraint" destination="mOm-wL-Ill" id="8Eh-VA-8pQ"/>
                         <outlet property="tapLabel" destination="h3F-qt-HkT" id="dzr-pU-7fj"/>
                     </connections>
                 </viewController>

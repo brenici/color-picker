@@ -22,6 +22,7 @@
 		7A7136B42457320000E7DC5B /* ColorWheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7136B32457320000E7DC5B /* ColorWheel.swift */; };
 		7A7136B62457370700E7DC5B /* GradientTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7136B52457370700E7DC5B /* GradientTrack.swift */; };
 		7A7136B82458459D00E7DC5B /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7136B72458459D00E7DC5B /* UIView+Extensions.swift */; };
+		7ACC10A324599DEE00D5C755 /* color_picker_preview.png in Resources */ = {isa = PBXBuildFile; fileRef = 7ACC10A224599DEE00D5C755 /* color_picker_preview.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		7A7136B32457320000E7DC5B /* ColorWheel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorWheel.swift; sourceTree = "<group>"; };
 		7A7136B52457370700E7DC5B /* GradientTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientTrack.swift; sourceTree = "<group>"; };
 		7A7136B72458459D00E7DC5B /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		7ACC10A224599DEE00D5C755 /* color_picker_preview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = color_picker_preview.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,15 +77,16 @@
 			isa = PBXGroup;
 			children = (
 				7A713695245588CD00E7DC5B /* Main.storyboard */,
+				7A71369A245588CE00E7DC5B /* LaunchScreen.storyboard */,
 				7A71368F245588CD00E7DC5B /* AppDelegate.swift */,
 				7A713691245588CD00E7DC5B /* SceneDelegate.swift */,
 				7A713693245588CD00E7DC5B /* ViewController.swift */,
 				7A7136A32455F2F700E7DC5B /* ColorPickerView.swift */,
 				7A7136AA24570F2300E7DC5B /* Controls */,
-				7A713698245588CE00E7DC5B /* Assets.xcassets */,
-				7A71369A245588CE00E7DC5B /* LaunchScreen.storyboard */,
-				7A71369D245588CE00E7DC5B /* Info.plist */,
 				7A7136A72455F6ED00E7DC5B /* Extensions */,
+				7ACC10A124599DD300D5C755 /* Resources */,
+				7A713698245588CE00E7DC5B /* Assets.xcassets */,
+				7A71369D245588CE00E7DC5B /* Info.plist */,
 			);
 			path = ColorPicker;
 			sourceTree = "<group>";
@@ -108,6 +111,14 @@
 				7A7136B1245729B600E7DC5B /* ControlThumb.swift */,
 			);
 			path = Controls;
+			sourceTree = "<group>";
+		};
+		7ACC10A124599DD300D5C755 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7ACC10A224599DEE00D5C755 /* color_picker_preview.png */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -168,6 +179,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7ACC10A324599DEE00D5C755 /* color_picker_preview.png in Resources */,
 				7A71369C245588CE00E7DC5B /* LaunchScreen.storyboard in Resources */,
 				7A713699245588CE00E7DC5B /* Assets.xcassets in Resources */,
 				7A713697245588CD00E7DC5B /* Main.storyboard in Resources */,

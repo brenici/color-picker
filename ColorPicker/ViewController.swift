@@ -13,7 +13,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var colorPickerView: ColorPickerView!
     @IBOutlet weak var tapLabel: UILabel!
-        
+    @IBOutlet weak var colorPickerWidthConstraint: NSLayoutConstraint!
+    
+    
     let defaults = UserDefaults.standard
     let defaultColorKey = "defaultColor"
     var defaultColor = UIColor()
@@ -35,17 +37,15 @@ class ViewController: UIViewController {
     }
     
     func initiateColorPicker() {
-        colorPickerView.translatesAutoresizingMaskIntoConstraints = false
+        colorPickerView.initControls()
         colorPickerView.currentColor = defaultColor
         colorPickerView.getColorComponents()
         colorPickerView.setColorComponents()
         colorPickerView.updateControls()
     }
 
-    override func viewWillLayoutSubviews() {
-        if !didUpdateLayout {
-            updateLayout()
-        }
+    override func viewDidLayoutSubviews() {
+        updateLayout()
     }
     
     func layoutStatusBar() {
@@ -78,10 +78,11 @@ class ViewController: UIViewController {
     }
     
     private func updateLayout() {
-        let side = min(self.view.frame.height, self.view.frame.width)
-        let constant = side > 414 ? side * 0.6 : side
-        colorPickerView.widthAnchor.constraint(equalToConstant: constant).isActive = true
-        colorPickerView.heightAnchor.constraint(equalToConstant: constant).isActive = true
+        if !didUpdateLayout {
+            let side = min(self.view.frame.height, self.view.frame.width)
+            colorPickerView.screenWidth = side > 414 ? side * 0.6 : side
+            colorPickerWidthConstraint.constant = side > 414 ? side * 0.6 : side
+        }
         didUpdateLayout = true
     }
     

@@ -39,8 +39,12 @@ class ColorPickerView: UIView {
         super.init(frame: frame)
     }
     
-    private func commonInit() {
+    func commonInit() {
         getColorComponents()
+    }
+
+    func initControls() {
+        screenWidth = screenWidth > 414 ? screenWidth * 0.6 : screenWidth
         addControls()
         hueControl.delegate = self
         brightnessControl.delegate = self

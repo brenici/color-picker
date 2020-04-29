@@ -2,4 +2,4 @@
 
 An iOS implementation of HSB Color Picker built in Swift.
 
-<img src="ColorPicker/Resources/color_picker_preview.png">
+![]("ColorPicker/Resources/color_picker_preview.png")

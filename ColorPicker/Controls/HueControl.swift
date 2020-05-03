@@ -41,12 +41,9 @@ class HueControl: UIView {
         layoutControlThumb()
         addGestureRecognizers()
     }
+      
+    // MARK: - CONTROLS
     
-    private func addGestureRecognizers() {
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.thumbControlPanned(_:)))
-        controlThumb.addGestureRecognizer(panGesture)
-    }
-        
     private func addColorWheelView() {
         let colorWheelView = ColorWheel(frame: CGRect(x: margin, y: margin, width: controlWidth - (margin * 2), height: controlWidth - (margin * 2)))
         colorWheelView.backgroundColor = .clear
@@ -60,25 +57,42 @@ class HueControl: UIView {
         self.addSubview(controlThumb)
     }
     
+    // MARK: - CONTROLS UPDATE
+
     func updateControlThumb(with huevalue: CGFloat) {
         getHueAngle(from: huevalue)
         layoutControlThumb()
     }
     
-    func layoutControlThumb() {
-        let newPosition = getThumbPosition(from: hueAngle)
-        controlThumb.center = newPosition
-        getHueValue(from: hueAngle)
+    func showThumbValue(_ value: String, _ color: UIColor) {
+        controlThumb.valueLabel.text = value
+        controlThumb.valueLabel.textColor = color
+        controlThumb.typeLabel.textColor = color
+    }
+
+    
+    // MARK: - GESTURES
+    
+    private func addGestureRecognizers() {
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.thumbControlPanned(_:)))
+        controlThumb.addGestureRecognizer(panGesture)
     }
     
-    private func getHueValue(from angle: Float) {
-        hueValue = 1.0 - CGFloat(Double(angle) / (2 * Double.pi))
+    @objc private func thumbControlPanned(_ recognizer: UIPanGestureRecognizer) {
+        switch(recognizer.state) {
+        case UIGestureRecognizer.State.changed:
+            moveControlThumb(toward: recognizer.location(in: self))
+            break
+        case UIGestureRecognizer.State.ended:
+            delegate?.hueApplied(hueValue)
+            break
+        default:
+            break
+        }
     }
     
-    func getHueAngle(from value: CGFloat) {
-        hueAngle = 2 * Float.pi * (1 - Float(value))
-    }
-    
+    // MARK: - LAYOUT
+
     private func getHueAngle(from point: CGPoint) -> Float {
         let deltaX = Float(self.bounds.midX - point.x)
         let deltaY = Float(self.bounds.midY - point.y)
@@ -95,36 +109,37 @@ class HueControl: UIView {
         return CGPoint(x: positionX, y: positionY)
     }
     
-    @objc private func thumbControlPanned(_ recognizer: UIPanGestureRecognizer) {
-        switch(recognizer.state) {
-        case UIGestureRecognizer.State.changed:
-            moveControlThumb(toward: recognizer.location(in: self))
-            break
-        case UIGestureRecognizer.State.ended:
-            applyHue()
-            break
-        default:
-            break
-        }
-    }
-    
     private func moveControlThumb(toward point: CGPoint) {
         hueAngle = getHueAngle(from: point)
         layoutControlThumb()
         delegate?.hueChanged(hueValue)
     }
+            
+    func layoutControlThumb() {
+        let newPosition = getThumbPosition(from: hueAngle)
+        controlThumb.center = newPosition
+        getHueValue(from: hueAngle)
+    }
     
-    func showThumbValue(_ value: String, _ color: UIColor) {
-        controlThumb.valueLabel.text = value
-        controlThumb.valueLabel.textColor = color
-        controlThumb.typeLabel.textColor = color
+    func getHueAngle(from value: CGFloat) {
+        hueAngle = 2 * Float.pi * (1 - Float(value))
+    }
+    
+    // MARK: - COLORS
+    
+    func setHueValue(from value: CGFloat) {
+        hueValue = value
+        getHueAngle(from: value)
+    }
+    
+    private func getHueValue(from angle: Float) {
+        hueValue = 1.0 - CGFloat(Double(angle) / (2 * Double.pi))
     }
         
-    private func applyHue() {
-       delegate?.hueApplied(hueValue)
-    }
+    // MARK: -
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
 }

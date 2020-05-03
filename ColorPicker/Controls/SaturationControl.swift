@@ -39,6 +39,8 @@ class SaturationControl: UIView {
         addGestureRecognizers()
     }
     
+    // MARK: - CONTROLS
+    
     private func addGradientTrack() {
         let trackBezel = GradientTrack()
         let bezel = self.bounds.height / 20
@@ -58,40 +60,12 @@ class SaturationControl: UIView {
         self.addSubview(controlThumb)
         controlThumb.typeLabel.text = "S"
     }
-    
-    private func addGestureRecognizers() {
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.thumbControlPanned(_:)))
-        controlThumb.addGestureRecognizer(panGesture)
-    }
-    
-    @objc private func thumbControlPanned(_ recognizer: UIPanGestureRecognizer) {
-        switch(recognizer.state) {
-        case UIGestureRecognizer.State.changed:
-            let point = recognizer.location(in: self).x-(thumbSize.width/2)
-            moveThumbTowardPoint(point)
-            break
-        case UIGestureRecognizer.State.ended:
-            applySaturation()
-            break
-        default: break
-        }
-    }
-    
-    private func moveThumbTowardPoint(_ delta: CGFloat) {
-        let thumbPosition = delta/(self.bounds.width-thumbSize.width)
-        saturationValue = max(min(thumbPosition, 1.0), 0.001)
-        layoutControlThumb()
-        delegate?.saturationChanged(saturationValue)
-    }
-    
+        
+    // MARK: - CONTROLS UPDATE
+
     func updateControlThumb(with saturation: CGFloat) {
         saturationValue = saturation
         layoutControlThumb()
-    }
-    
-    func layoutControlThumb() {
-        let newPosition = (saturationValue * (bounds.width - controlThumb.bounds.width)) + controlThumb.bounds.width/2
-        controlThumb.center.x = newPosition
     }
     
     func updateGradientTrack(colors: [UIColor]) {
@@ -107,9 +81,41 @@ class SaturationControl: UIView {
         controlThumb.typeLabel.textColor = color
     }
     
-    private func applySaturation() {
-        delegate?.saturationApplied(saturationValue)
+    // MARK: - LAYOUT
+    
+    private func moveThumbTowardPoint(_ delta: CGFloat) {
+        let thumbPosition = delta/(self.bounds.width-thumbSize.width)
+        saturationValue = max(min(thumbPosition, 1.0), 0.001)
+        layoutControlThumb()
+        delegate?.saturationChanged(saturationValue)
     }
+    
+    private func layoutControlThumb() {
+        let newPosition = (saturationValue * (bounds.width - controlThumb.bounds.width)) + controlThumb.bounds.width/2
+        controlThumb.center.x = newPosition
+    }
+    
+    // MARK: - GESTURES
+    
+    private func addGestureRecognizers() {
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.thumbControlPanned(_:)))
+        controlThumb.addGestureRecognizer(panGesture)
+    }
+    
+    @objc private func thumbControlPanned(_ recognizer: UIPanGestureRecognizer) {
+        switch(recognizer.state) {
+        case UIGestureRecognizer.State.changed:
+            let point = recognizer.location(in: self).x-(thumbSize.width/2)
+            moveThumbTowardPoint(point)
+            break
+        case UIGestureRecognizer.State.ended:
+            delegate?.saturationApplied(saturationValue)
+            break
+        default: break
+        }
+    }
+    
+    // MARK: -
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

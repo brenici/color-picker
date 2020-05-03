@@ -15,66 +15,32 @@ class ViewController: UIViewController {
     @IBOutlet weak var tapLabel: UILabel!
     @IBOutlet weak var colorPickerWidthConstraint: NSLayoutConstraint!
     
-    
     let defaults = UserDefaults.standard
     let defaultColorKey = "defaultColor"
-    var defaultColor = UIColor()
+    var defaultColor = UIColor.green
     var didUpdateLayout = false
-    
     var shouldStatusBarBeDark = true { didSet { layoutStatusBar() } }
-    override var preferredStatusBarStyle: UIStatusBarStyle { return checkCurrentColor() }
+    override var preferredStatusBarStyle: UIStatusBarStyle { return toggleStatusBarStyle() }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         colorPickerView.delegate = self
         addGestureRecognisers()
-        getDefaultColor()
-        backgroundView.backgroundColor = defaultColor
-        changeStatusBarStyle(for: defaultColor)
-        tapLabel.textColor = defaultColor.maxContrast()
-        tapLabel.addShadow(color: .black, opacity: 0.3, offset: CGSize(width: 1, height: 1), radius: 3)
-        initiateColorPicker()
+        setupColors()
     }
     
-    func initiateColorPicker() {
-        colorPickerView.initControls()
-        colorPickerView.currentColor = defaultColor
-        colorPickerView.getColorComponents()
-        colorPickerView.setColorComponents()
-        colorPickerView.updateControls()
+    private func setupColors() {
+        getDefaultColor()
+        backgroundView.backgroundColor = defaultColor
+        toggleStatusBarStyle(for: defaultColor)
+        tapLabel.textColor = defaultColor.maxContrast()
+        colorPickerView.setupColorPicker(with: defaultColor)
     }
+
+    // MARK: - LAYOUT
 
     override func viewDidLayoutSubviews() {
         updateLayout()
-    }
-    
-    func layoutStatusBar() {
-        self.setNeedsStatusBarAppearanceUpdate()
-    }
-    
-    func checkCurrentColor() -> UIStatusBarStyle {
-        if #available(iOS 13.0, *) {
-            return colorPickerView.currentColor.shouldStatusBarDark() ? .darkContent : .lightContent
-        } else {
-            return colorPickerView.currentColor.shouldStatusBarDark() ? .default : .lightContent
-        }
-    }
-
-    
-    private func addGestureRecognisers() {
-        let tapGesture = UITapGestureRecognizer()
-        tapGesture.addTarget(self, action: #selector(backgroundViewTapped(_:)))
-        backgroundView.addGestureRecognizer(tapGesture)
-    }
-    
-    @objc private func backgroundViewTapped(_ recognizer: UITapGestureRecognizer) {
-        showColorPickerView()
-    }
-    
-    func showColorPickerView() {
-        tapLabel.fadeView(0.0, 0.4, hidden: colorPickerView.isHidden)
-        colorPickerView.fadeView(0.0, 0.5, hidden: !colorPickerView.isHidden)
-        colorPickerView.updateColors(with: backgroundView.backgroundColor ?? UIColor.green)
     }
     
     private func updateLayout() {
@@ -86,6 +52,40 @@ class ViewController: UIViewController {
         didUpdateLayout = true
     }
     
+    func toggleColorPickerView() {
+        tapLabel.fadeView(0.0, 0.4, hidden: colorPickerView.isHidden)
+        colorPickerView.fadeView(0.0, 0.5, hidden: !colorPickerView.isHidden)
+        colorPickerView.updateColors(with: backgroundView.backgroundColor ?? UIColor.green)
+    }
+    
+    // MARK: - GESTURES
+
+    private func addGestureRecognisers() {
+        let tapGesture = UITapGestureRecognizer()
+        tapGesture.addTarget(self, action: #selector(backgroundViewTapped(_:)))
+        backgroundView.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc private func backgroundViewTapped(_ recognizer: UITapGestureRecognizer) {
+        toggleColorPickerView()
+    }
+    
+    // MARK: - STATUS BAR STYLE
+    
+    private func layoutStatusBar() {
+        self.setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    private func toggleStatusBarStyle() -> UIStatusBarStyle {
+        if #available(iOS 13.0, *) {
+            return colorPickerView.currentColor.shouldStatusBarDark() ? .darkContent : .lightContent
+        } else {
+            return colorPickerView.currentColor.shouldStatusBarDark() ? .default : .lightContent
+        }
+    }
+    
+    // MARK: - USER DEFAULTS
+
     private func getDefaultColor() {
         if let color = defaults.value(forKey: defaultColorKey) as? String {
             defaultColor = UIColor(hex: color)
@@ -101,17 +101,19 @@ class ViewController: UIViewController {
     
 }
 
+// MARK: - EXTENSIONS
+
 extension ViewController: ColorPickerViewDelegate {
     
     func changeColor(_ color: UIColor) {
-        changeStatusBarStyle(for: color)
+        toggleStatusBarStyle(for: color)
         backgroundView.backgroundColor = color
         tapLabel.textColor = color.maxContrast()
     }
     
     func undoColor(_ color: UIColor) {
         colorPickerView.currentColor = color
-        changeStatusBarStyle(for: color)
+        toggleStatusBarStyle(for: color)
         backgroundView.backgroundColor = color
         tapLabel.textColor = color.maxContrast()
         saveDefaultColor(color.hexRGBA())
@@ -121,15 +123,14 @@ extension ViewController: ColorPickerViewDelegate {
         saveDefaultColor(color.hexRGBA())
     }
 
-    func changeStatusBarStyle(for color: UIColor) {
+    func toggleStatusBarStyle(for color: UIColor) {
         if shouldStatusBarBeDark != color.shouldStatusBarDark() {
             shouldStatusBarBeDark = color.shouldStatusBarDark()
         }
     }
     
     func hideColorPickerView() {
-        showColorPickerView()
+        toggleColorPickerView()
     }
     
 }
-

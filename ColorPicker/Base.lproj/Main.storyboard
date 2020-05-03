@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="ipad12_9rounded" orientation="portrait" layout="fullscreen" appearance="light"/>
+    <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -12,20 +12,22 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Color_Picker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WOa-bf-hX9">
-                                <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap to change the color" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3F-qt-HkT">
-                                        <rect key="frame" x="421.5" y="672.5" width="181" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap to change the color" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="h3F-qt-HkT">
+                                        <rect key="frame" x="127" y="433.66666666666669" width="160" height="28.666666666666686"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
+                                        <color key="shadowColor" white="0.0" alpha="0.3298466435185185" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <size key="shadowOffset" width="1" height="1"/>
                                     </label>
                                     <view hidden="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dWc-W5-FG2" customClass="ColorPickerView" customModule="Color_Picker" customModuleProvider="target">
-                                        <rect key="frame" x="352" y="523" width="320" height="320"/>
+                                        <rect key="frame" x="47" y="288" width="320" height="320"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="dWc-W5-FG2" secondAttribute="height" multiplier="1:1" id="41K-6Y-Bm4"/>
@@ -39,6 +41,7 @@
                                     <constraint firstItem="dWc-W5-FG2" firstAttribute="centerX" secondItem="WOa-bf-hX9" secondAttribute="centerX" id="Bib-32-TOw"/>
                                     <constraint firstItem="h3F-qt-HkT" firstAttribute="centerY" secondItem="WOa-bf-hX9" secondAttribute="centerY" id="I6X-CJ-VLH"/>
                                     <constraint firstItem="dWc-W5-FG2" firstAttribute="centerY" secondItem="WOa-bf-hX9" secondAttribute="centerY" id="ZFJ-rH-eyE"/>
+                                    <constraint firstItem="h3F-qt-HkT" firstAttribute="width" secondItem="dWc-W5-FG2" secondAttribute="width" multiplier="0.5" id="lDb-ej-idi"/>
                                 </constraints>
                             </view>
                         </subviews>

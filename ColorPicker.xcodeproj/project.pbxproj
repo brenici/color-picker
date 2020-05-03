@@ -22,6 +22,7 @@
 		7A7136B42457320000E7DC5B /* ColorWheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7136B32457320000E7DC5B /* ColorWheel.swift */; };
 		7A7136B62457370700E7DC5B /* GradientTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7136B52457370700E7DC5B /* GradientTrack.swift */; };
 		7A7136B82458459D00E7DC5B /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7136B72458459D00E7DC5B /* UIView+Extensions.swift */; };
+		7ABFEB2B245F47C40083A3DC /* ColorPickerView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABFEB2A245F47C40083A3DC /* ColorPickerView+Extensions.swift */; };
 		7ACC10A324599DEE00D5C755 /* color_picker_preview.png in Resources */ = {isa = PBXBuildFile; fileRef = 7ACC10A224599DEE00D5C755 /* color_picker_preview.png */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +44,7 @@
 		7A7136B32457320000E7DC5B /* ColorWheel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorWheel.swift; sourceTree = "<group>"; };
 		7A7136B52457370700E7DC5B /* GradientTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientTrack.swift; sourceTree = "<group>"; };
 		7A7136B72458459D00E7DC5B /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		7ABFEB2A245F47C40083A3DC /* ColorPickerView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ColorPickerView+Extensions.swift"; sourceTree = "<group>"; };
 		7ACC10A224599DEE00D5C755 /* color_picker_preview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = color_picker_preview.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -82,6 +84,7 @@
 				7A713691245588CD00E7DC5B /* SceneDelegate.swift */,
 				7A713693245588CD00E7DC5B /* ViewController.swift */,
 				7A7136A32455F2F700E7DC5B /* ColorPickerView.swift */,
+				7ABFEB2A245F47C40083A3DC /* ColorPickerView+Extensions.swift */,
 				7A7136AA24570F2300E7DC5B /* Controls */,
 				7A7136A72455F6ED00E7DC5B /* Extensions */,
 				7ACC10A124599DD300D5C755 /* Resources */,
@@ -193,6 +196,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7ABFEB2B245F47C40083A3DC /* ColorPickerView+Extensions.swift in Sources */,
 				7A7136A924570F1500E7DC5B /* HueControl.swift in Sources */,
 				7A7136B62457370700E7DC5B /* GradientTrack.swift in Sources */,
 				7A7136B2245729B600E7DC5B /* ControlThumb.swift in Sources */,
@@ -280,7 +284,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -334,7 +338,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

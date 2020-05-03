@@ -39,6 +39,8 @@ class BrightnessControl: UIView {
         addGestureRecognizers()
     }
     
+    // MARK: - CONTROLS
+    
     private func addGradientTrack() {
         let trackBezel = GradientTrack()
         let bezelWidth = self.bounds.height / 20
@@ -59,6 +61,42 @@ class BrightnessControl: UIView {
         controlThumb.typeLabel.text = "B"
     }
     
+    // MARK: - CONTROLS UPDATE
+    
+    func updateControlThumb(with brightness: CGFloat) {
+        brightnessValue = brightness
+        layoutControlThumb()
+    }
+    
+    func updateGradientTrack(colors: [CGColor]) {
+        gradientTrack.gradient.frame = gradientTrack.bounds
+        gradientTrack.gradient.startPoint = CGPoint(x: 0, y: 0.5)
+        gradientTrack.gradient.endPoint = CGPoint(x: 1, y: 0.5)
+        gradientTrack.gradient.colors = colors
+    }
+    
+    func showThumbValue(_ value: String, _ color: UIColor) {
+        controlThumb.valueLabel.text = value
+        controlThumb.valueLabel.textColor = color
+        controlThumb.typeLabel.textColor = color
+    }
+    
+    // MARK: - LAYOUT
+    
+    private func moveThumbTowardPoint(_ delta: CGFloat) {
+        let thumbPosition = delta/(self.bounds.width-thumbSize.width)
+        brightnessValue = max(min(thumbPosition, 1.0), 0.001)
+        layoutControlThumb()
+        delegate?.brightnessChanged(brightnessValue)
+    }
+    
+    private func layoutControlThumb() {
+        let newPosition = (brightnessValue * (bounds.width - controlThumb.bounds.width)) + controlThumb.bounds.width/2
+        controlThumb.center.x = newPosition
+    }
+    
+    // MARK: - GESTURES
+
     private func addGestureRecognizers() {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.thumbControlPanned(_:)))
         controlThumb.addGestureRecognizer(panGesture)
@@ -71,45 +109,13 @@ class BrightnessControl: UIView {
             moveThumbTowardPoint(point)
             break
         case UIGestureRecognizer.State.ended:
-            applyBrightness()
+            delegate?.brightnessApplied(brightnessValue)
             break
         default: break
         }
     }
     
-    private func moveThumbTowardPoint(_ delta: CGFloat) {
-        let thumbPosition = delta/(self.bounds.width-thumbSize.width)
-        brightnessValue = max(min(thumbPosition, 1.0), 0.001)
-        layoutControlThumb()
-        delegate?.brightnessChanged(brightnessValue)
-    }
-    
-    func updateControlThumb(with brightness: CGFloat) {
-        brightnessValue = brightness
-        layoutControlThumb()
-    }
-    
-    func layoutControlThumb() {
-        let newPosition = (brightnessValue * (bounds.width - controlThumb.bounds.width)) + controlThumb.bounds.width/2
-        controlThumb.center.x = newPosition
-    }
-    
-    func updateGradientTrack(colors: [UIColor]) {
-        gradientTrack.gradient.frame = gradientTrack.bounds
-        gradientTrack.gradient.startPoint = CGPoint(x: 0, y: 0.5)
-        gradientTrack.gradient.endPoint = CGPoint(x: 1, y: 0.5)
-        gradientTrack.gradient.colors = [colors[0].cgColor,  colors[1].cgColor]
-    }
-    
-    func showThumbValue(_ value: String, _ color: UIColor) {
-        controlThumb.valueLabel.text = value
-        controlThumb.valueLabel.textColor = color
-        controlThumb.typeLabel.textColor = color
-    }
-    
-    private func applyBrightness() {
-        delegate?.brightnessApplied(brightnessValue)
-    }
+    // MARK: -
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
